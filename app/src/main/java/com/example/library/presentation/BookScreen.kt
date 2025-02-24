@@ -32,12 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.library.model.Book
-import com.example.library.nvigation.Routes
+import com.example.library.domain.model.books.Book
+import com.example.library.domain.model.books.Author
+import com.example.library.domain.model.books.Genre
+import com.example.library.presentation.nvigation.Routes
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -195,6 +196,24 @@ fun BookCard(
     }
 }
 
+val authors = listOf(
+    Author(
+        Name = "",
+        Nationality = "",
+        ID = 0,
+        Books = "",
+        BirthYear = 0,
+        CreatedAt = ""
+    )
+)
+val genres = listOf(
+    Genre(
+        ID = 0,
+        Name = "",
+        Books = ""
+    )
+)
+
 val books = arrayOf(
     Book(
         AvailableCopies = 10,
@@ -203,7 +222,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000001",
         PublishedYear = 1949,
         Title = "1984",
-        TotalCopies = 10
+        TotalCopies = 10,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 8,
@@ -212,7 +233,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000002",
         PublishedYear = 1960,
         Title = "To Kill a Mockingbird",
-        TotalCopies = 8
+        TotalCopies = 8,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 12,
@@ -221,7 +244,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000003",
         PublishedYear = 1925,
         Title = "The Great Gatsby",
-        TotalCopies = 12
+        TotalCopies = 12,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 15,
@@ -230,7 +255,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000004",
         PublishedYear = 1813,
         Title = "Pride and Prejudice",
-        TotalCopies = 15
+        TotalCopies = 15,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 7,
@@ -239,7 +266,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000005",
         PublishedYear = 1951,
         Title = "The Catcher in the Rye",
-        TotalCopies = 7
+        TotalCopies = 7,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 9,
@@ -248,7 +277,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000006",
         PublishedYear = 1937,
         Title = "The Hobbit",
-        TotalCopies = 9
+        TotalCopies = 9,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 11,
@@ -257,7 +288,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000007",
         PublishedYear = 1953,
         Title = "Fahrenheit 451",
-        TotalCopies = 11
+        TotalCopies = 11,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 6,
@@ -266,7 +299,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000008",
         PublishedYear = 1851,
         Title = "Moby-Dick",
-        TotalCopies = 6
+        TotalCopies = 6,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 14,
@@ -275,7 +310,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000009",
         PublishedYear = 1869,
         Title = "War and Peace",
-        TotalCopies = 14
+        TotalCopies = 14,
+        Authors = authors,
+        Genres = genres
     ),
     Book(
         AvailableCopies = 20,
@@ -284,7 +321,9 @@ val books = arrayOf(
         ISBN = "ISBN0000000010",
         PublishedYear = 1954,
         Title = "The Lord of the Rings",
-        TotalCopies = 20
+        TotalCopies = 20,
+        Authors = authors,
+        Genres = genres
     )
 )
 

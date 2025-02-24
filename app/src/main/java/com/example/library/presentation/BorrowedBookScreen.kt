@@ -35,8 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.library.model.BorrowedBook
-import com.example.library.nvigation.Routes
+import com.example.library.domain.model.BorrowedBook
+import com.example.library.domain.model.books.Book
+import com.example.library.domain.model.student.Student
+import com.example.library.presentation.nvigation.Routes
 
 @Composable
 fun BorrowedBookScreen(navController: NavHostController) {
@@ -178,6 +180,31 @@ fun BorrowedBookCard(
     }
 }
 
+val student = listOf(
+    Student(
+        CreatedAt = "2023-10-01T10:00:00Z",
+        Email = "student1@example.com",
+        ID = 1,
+        IsActive = true,
+        Name = "John Doe",
+        Phone = "123-456-7890"
+    )
+)
+
+val book = listOf(
+    Book(
+        AvailableCopies = 10,
+        CreatedAt = "2025-02-22T04:35:01.652579+06:00",
+        ID = 1,
+        ISBN = "ISBN0000000001",
+        PublishedYear = 1949,
+        Title = "1984",
+        TotalCopies = 10,
+        Authors = authors,
+        Genres = genres
+    )
+)
+
 
 val borrowedBook = arrayOf(
     BorrowedBook(
@@ -186,7 +213,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-01T10:00:00Z",
         Returned = false,
         StudentID = 101,
-        TakenAt = "2023-10-01T09:00:00Z"
+        TakenAt = "2023-10-01T09:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-1-23-456789-0",
@@ -194,7 +223,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-02T11:00:00Z",
         Returned = true,
         StudentID = 102,
-        TakenAt = "2023-10-02T10:00:00Z"
+        TakenAt = "2023-10-02T10:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-0-12-345678-9",
@@ -202,7 +233,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-03T12:00:00Z",
         Returned = false,
         StudentID = 103,
-        TakenAt = "2023-10-03T11:00:00Z"
+        TakenAt = "2023-10-03T11:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-1-11-111111-1",
@@ -210,7 +243,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-04T13:00:00Z",
         Returned = true,
         StudentID = 104,
-        TakenAt = "2023-10-04T12:00:00Z"
+        TakenAt = "2023-10-04T12:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-2-22-222222-2",
@@ -218,7 +253,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-05T14:00:00Z",
         Returned = false,
         StudentID = 105,
-        TakenAt = "2023-10-05T13:00:00Z"
+        TakenAt = "2023-10-05T13:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-3-33-333333-3",
@@ -226,7 +263,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-06T15:00:00Z",
         Returned = true,
         StudentID = 106,
-        TakenAt = "2023-10-06T14:00:00Z"
+        TakenAt = "2023-10-06T14:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-4-44-444444-4",
@@ -234,7 +273,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-07T16:00:00Z",
         Returned = false,
         StudentID = 107,
-        TakenAt = "2023-10-07T15:00:00Z"
+        TakenAt = "2023-10-07T15:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-5-55-555555-5",
@@ -242,7 +283,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-08T17:00:00Z",
         Returned = true,
         StudentID = 108,
-        TakenAt = "2023-10-08T16:00:00Z"
+        TakenAt = "2023-10-08T16:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-6-66-666666-6",
@@ -250,7 +293,9 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-09T18:00:00Z",
         Returned = false,
         StudentID = 109,
-        TakenAt = "2023-10-09T17:00:00Z"
+        TakenAt = "2023-10-09T17:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
     BorrowedBook(
         BookISBN = "978-7-77-777777-7",
@@ -258,6 +303,8 @@ val borrowedBook = arrayOf(
         ReturnAt = "2023-11-10T19:00:00Z",
         Returned = true,
         StudentID = 110,
-        TakenAt = "2023-10-10T18:00:00Z"
+        TakenAt = "2023-10-10T18:00:00Z",
+        Book = book[0],
+        Student = student[0]
     )
 )

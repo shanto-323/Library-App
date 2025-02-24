@@ -1,4 +1,4 @@
-package com.example.library.model
+package com.example.library.domain.model.student
 
 data class Student(
     val CreatedAt: String,

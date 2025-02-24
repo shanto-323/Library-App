@@ -31,12 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.library.model.Student
-import com.example.library.nvigation.Routes
+import com.example.library.domain.model.student.Student
+import com.example.library.presentation.nvigation.Routes
 
 @Composable
 fun StudentScreen(navController: NavHostController) {

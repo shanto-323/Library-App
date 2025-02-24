@@ -1,4 +1,4 @@
-package com.example.library.nvigation
+package com.example.library.presentation.nvigation
 
 sealed class Routes(val route: String) {
     data object HomeScreen : Routes("home_screen")

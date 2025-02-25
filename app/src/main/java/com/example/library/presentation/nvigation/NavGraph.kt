@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.library.presentation.BookScreen
-import com.example.library.presentation.BorrowedBookScreen
+import com.example.library.presentation.books.BookScreen
+import com.example.library.presentation.borrowed_books.BorrowedBookScreen
 import com.example.library.presentation.HomeScreen
-import com.example.library.presentation.StudentScreen
+import com.example.library.presentation.student.StudentScreen
 
 @Composable
 fun NavGraph() {

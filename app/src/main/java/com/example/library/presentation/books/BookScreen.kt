@@ -1,5 +1,6 @@
-package com.example.library.presentation
+package com.example.library.presentation.books
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.library.domain.model.books.Book
 import com.example.library.domain.model.books.Author
@@ -43,7 +45,13 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun BookScreen(navController: NavHostController) {
+fun BookScreen(
+    navController: NavHostController,
+    viewModel: BooksViewModel = hiltViewModel()
+) {
+    val books = viewModel.state.collectAsState().value
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,9 +121,9 @@ fun BookScreen(navController: NavHostController) {
 
         }
         LazyColumn {
-            items(books) { i ->
+            items(books.size) { i ->
                 BookCard(
-                    book = i
+                    book = books[i]
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.example.library.presentation
+package com.example.library.presentation.borrowed_books
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +26,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,12 +34,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.library.domain.model.BorrowedBook
+import com.example.library.domain.model.books.Book
+import com.example.library.domain.model.borrowed_books.BorrowedBooksType
+import com.example.library.domain.model.borrowed_books.BorrowedBooksTypeItem
 import com.example.library.domain.model.student.Student
+import com.example.library.presentation.books.authors
+import com.example.library.presentation.books.extractDateTime
+import com.example.library.presentation.books.genres
 import com.example.library.presentation.nvigation.Routes
 
 @Composable
-fun StudentScreen(navController: NavHostController) {
+fun BorrowedBookScreen(
+    navController: NavHostController,
+    viewModel: BorrowedBooksViewModel = hiltViewModel()
+) {
+    val borrowedBooks = viewModel.state.collectAsState().value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -100,6 +113,7 @@ fun StudentScreen(navController: NavHostController) {
                                 contentDescription = null,
                             )
                         }
+
                     },
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -107,9 +121,9 @@ fun StudentScreen(navController: NavHostController) {
 
         }
         LazyColumn {
-            items(students) { i ->
-                StudentCard(
-                    student = i
+            items(borrowedBooks.size) { i ->
+                BorrowedBookCard(
+                    book = borrowedBooks[i]
                 )
             }
         }
@@ -117,9 +131,11 @@ fun StudentScreen(navController: NavHostController) {
     }
 }
 
+
 @Composable
-fun StudentCard(
-    student: Student = students[0]
+fun BorrowedBookCard(
+    modifier: Modifier = Modifier,
+    book: BorrowedBooksTypeItem
 ) {
     Column(
         modifier = Modifier
@@ -129,25 +145,16 @@ fun StudentCard(
             .padding(16.dp)
     ) {
         Text(
-            text = student.Name,
+            text = book.BookISBN,
             color = Color.Black,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             maxLines = 1
         )
         Spacer(modifier = Modifier.padding(2.dp))
         Text(
-            text = "NUMBER: " + student.Phone,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace,
-            fontSize = 12.sp,
-            maxLines = 1
-        )
-        Spacer(modifier = Modifier.padding(2.dp))
-        Text(
-            text = "EMAIL: " + student.Email,
+            text = "TAKEN BY: " + book.StudentID,
             color = Color.Black,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace,
@@ -156,7 +163,16 @@ fun StudentCard(
         )
         Spacer(modifier = Modifier.padding(2.dp))
         Text(
-            text = "Active: " + student.IsActive,
+            text = "TAKEN AT: " + extractDateTime(book.TakenAt),
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Monospace,
+            fontSize = 12.sp,
+            maxLines = 1
+        )
+        Spacer(modifier = Modifier.padding(2.dp))
+        Text(
+            text = "RETURNED AT: " + extractDateTime(book.ReturnAt),
             color = Color.Black,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace,
@@ -166,18 +182,17 @@ fun StudentCard(
 
         Spacer(modifier = Modifier.padding(2.dp))
         Text(
-            text = "DATE ADDED: " + extractDateTime(student.CreatedAt),
+            text = "RETURNED: " + book.Returned,
             color = Color.Black,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace,
-            fontSize = 8.sp,
+            fontSize = 12.sp,
             maxLines = 1
         )
     }
 }
 
-
-val students = arrayOf(
+val student = listOf(
     Student(
         CreatedAt = "2023-10-01T10:00:00Z",
         Email = "student1@example.com",
@@ -185,77 +200,123 @@ val students = arrayOf(
         IsActive = true,
         Name = "John Doe",
         Phone = "123-456-7890"
+    )
+)
+
+val book = listOf(
+    Book(
+        AvailableCopies = 10,
+        CreatedAt = "2025-02-22T04:35:01.652579+06:00",
+        ID = 1,
+        ISBN = "ISBN0000000001",
+        PublishedYear = 1949,
+        Title = "1984",
+        TotalCopies = 10,
+        Authors = authors,
+        Genres = genres
+    )
+)
+
+
+val borrowedBook = arrayOf(
+    BorrowedBook(
+        BookISBN = "978-3-16-148410-0",
+        ID = 1,
+        ReturnAt = "2023-11-01T10:00:00Z",
+        Returned = false,
+        StudentID = 101,
+        TakenAt = "2023-10-01T09:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-02T11:00:00Z",
-        Email = "student2@example.com",
+    BorrowedBook(
+        BookISBN = "978-1-23-456789-0",
         ID = 2,
-        IsActive = true,
-        Name = "Jane Smith",
-        Phone = "234-567-8901"
+        ReturnAt = "2023-11-02T11:00:00Z",
+        Returned = true,
+        StudentID = 102,
+        TakenAt = "2023-10-02T10:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-03T12:00:00Z",
-        Email = "student3@example.com",
+    BorrowedBook(
+        BookISBN = "978-0-12-345678-9",
         ID = 3,
-        IsActive = false,
-        Name = "Alice Johnson",
-        Phone = "345-678-9012"
+        ReturnAt = "2023-11-03T12:00:00Z",
+        Returned = false,
+        StudentID = 103,
+        TakenAt = "2023-10-03T11:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-04T13:00:00Z",
-        Email = "student4@example.com",
+    BorrowedBook(
+        BookISBN = "978-1-11-111111-1",
         ID = 4,
-        IsActive = true,
-        Name = "Bob Brown",
-        Phone = "456-789-0123"
+        ReturnAt = "2023-11-04T13:00:00Z",
+        Returned = true,
+        StudentID = 104,
+        TakenAt = "2023-10-04T12:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-05T14:00:00Z",
-        Email = "student5@example.com",
+    BorrowedBook(
+        BookISBN = "978-2-22-222222-2",
         ID = 5,
-        IsActive = false,
-        Name = "Charlie Davis",
-        Phone = "567-890-1234"
+        ReturnAt = "2023-11-05T14:00:00Z",
+        Returned = false,
+        StudentID = 105,
+        TakenAt = "2023-10-05T13:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-06T15:00:00Z",
-        Email = "student6@example.com",
+    BorrowedBook(
+        BookISBN = "978-3-33-333333-3",
         ID = 6,
-        IsActive = true,
-        Name = "Eve Wilson",
-        Phone = "678-901-2345"
+        ReturnAt = "2023-11-06T15:00:00Z",
+        Returned = true,
+        StudentID = 106,
+        TakenAt = "2023-10-06T14:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-07T16:00:00Z",
-        Email = "student7@example.com",
+    BorrowedBook(
+        BookISBN = "978-4-44-444444-4",
         ID = 7,
-        IsActive = true,
-        Name = "Frank Martinez",
-        Phone = "789-012-3456"
+        ReturnAt = "2023-11-07T16:00:00Z",
+        Returned = false,
+        StudentID = 107,
+        TakenAt = "2023-10-07T15:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-08T17:00:00Z",
-        Email = "student8@example.com",
+    BorrowedBook(
+        BookISBN = "978-5-55-555555-5",
         ID = 8,
-        IsActive = false,
-        Name = "Grace Lee",
-        Phone = "890-123-4567"
+        ReturnAt = "2023-11-08T17:00:00Z",
+        Returned = true,
+        StudentID = 108,
+        TakenAt = "2023-10-08T16:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-09T18:00:00Z",
-        Email = "student9@example.com",
+    BorrowedBook(
+        BookISBN = "978-6-66-666666-6",
         ID = 9,
-        IsActive = true,
-        Name = "Henry Garcia",
-        Phone = "901-234-5678"
+        ReturnAt = "2023-11-09T18:00:00Z",
+        Returned = false,
+        StudentID = 109,
+        TakenAt = "2023-10-09T17:00:00Z",
+        Book = book[0],
+        Student = student[0]
     ),
-    Student(
-        CreatedAt = "2023-10-10T19:00:00Z",
-        Email = "student10@example.com",
+    BorrowedBook(
+        BookISBN = "978-7-77-777777-7",
         ID = 10,
-        IsActive = true,
-        Name = "Ivy Hernandez",
-        Phone = "012-345-6789"
+        ReturnAt = "2023-11-10T19:00:00Z",
+        Returned = true,
+        StudentID = 110,
+        TakenAt = "2023-10-10T18:00:00Z",
+        Book = book[0],
+        Student = student[0]
     )
 )
